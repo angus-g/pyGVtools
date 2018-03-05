@@ -117,6 +117,7 @@ def parseCommandLine():
   parser.add_argument('-l','--label', type=str, default='',
                       help='Additional label to add to plot title.')
   parser.add_argument('--unittests', action='store_true', help=argparse.SUPPRESS)
+  parser.add_argument('--lines', type=str, default='', help='Specify a color for interface lines, if unspecified lines are not drawn.')
   optCmdLineArgs = parser.parse_args()
 
   if optCmdLineArgs.debug: enableDebugging()
@@ -266,6 +267,10 @@ def render(var, args, elevation=None, frame=0):
     if yDim.isZaxis and elevation==None: # Z on y axis ?
       if yCoord[0]>yCoord[-1]: plt.gca().invert_yaxis(); yLims = reversed(yLims)
       if yDim.positiveDown: plt.gca().invert_yaxis(); yLims = reversed(yLims)
+
+    # plot interface lines
+    if len(args.lines) > 0:
+      plt.plot(xCoord, yCoord.T, color=args.lines)
 
     # override x/y limits
     if args.xlim:
