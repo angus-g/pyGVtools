@@ -75,6 +75,11 @@ def parseCommandLine():
   parser.add_argument('--clim', type=float, nargs=2, metavar=('MIN','MAX'),
       help='''Specify the minimum/maximum color range.
       Values outside this range will be clipped to the minimum or maximum.''')
+  parser.add_argument('--xlim', type=float, nargs=2,
+                      help='Specify a comma-separated pair of x-direction axis limits. Default is the full range.')
+  parser.add_argument('--ylim', type=float, nargs=2,
+                      help='Specify a comma-separated pair of y-direction axis limits. Default is the full range.')
+
   parser.add_argument('--ignore', type=float, nargs=1,
       help='Mask out the values equal to IGNORE.')
   parser.add_argument('--ignorelt', type=float, nargs=1,
@@ -261,6 +266,13 @@ def render(var, args, elevation=None, frame=0):
     if yDim.isZaxis and elevation==None: # Z on y axis ?
       if yCoord[0]>yCoord[-1]: plt.gca().invert_yaxis(); yLims = reversed(yLims)
       if yDim.positiveDown: plt.gca().invert_yaxis(); yLims = reversed(yLims)
+
+    # override x/y limits
+    if args.xlim:
+      xLims = args.xlim
+    if args.ylim:
+      yLims = args.ylim
+
     if len(var.label)>50: fontsize=10
     elif len(var.label)>30: fontsize=12
     else: fontsize=14;
