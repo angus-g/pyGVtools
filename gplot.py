@@ -766,9 +766,9 @@ def makeGuessAboutCmap(clim=None, colormap=None):
     if vmin*vmax>=0 and vmax>0 and 3*vmin<vmax: plt.set_cmap('hot') # Single signed +ve data
     elif vmin*vmax>=0 and vmin<0 and 3*vmax>vmin: plt.set_cmap('hot_r') # Single signed -ve data
     elif abs((vmax+vmin)/(vmax-vmin))<.01: plt.set_cmap('seismic') # Multi-signed symmetric data
-    else: plt.set_cmap('spectral')
+    else: plt.set_cmap('nipy_spectral')
   landColor=[.5,.5,.5]
-  plt.gca().set_axis_bgcolor(landColor)
+  plt.gca().set_facecolor(landColor)
   return (vmin, vmax)
 
 
